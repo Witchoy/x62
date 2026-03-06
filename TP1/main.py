@@ -58,14 +58,27 @@ def tour_length(tour, distances):
         length += distances[city_a, city_b]
     return length
 
+def generate_all_tours(n):
+    if n == 0:
+        return [[]]
+    tours = []
+    for tour in generate_all_tours(n - 1):
+        for i in range(len(tour) + 1):
+            new_tour = tour[:i] + [n - 1] + tour[i:]
+            tours.append(new_tour)
+    return tours
 
-def print_matrix(matrix):
-    plt.imshow(matrix, cmap='viridis')
-    plt.colorbar()
-    plt.title("Distance Matrix")
-    plt.xticks(np.arange(matrix.shape[0]))
-    plt.yticks(np.arange(matrix.shape[1]))
-    plt.show()
+def force_brute(distances):
+    tours = generate_all_tours(len(distances))
+    min_length = float('inf')
+    best_tour = None
+    for tour in tours:
+        tl = tour_length(tour, distances)
+        if tl < min_length:
+            best_tour = tour
+            min_length = tl
+    return best_tour
+
 
 def main():
     n = 10
@@ -87,12 +100,25 @@ def main():
     # Distance matrix
     distances_matrix = distance_matrix(cities)
     print("\nDistance matrix:")
-    print_matrix(distances_matrix)
+    for i in range(n):
+        for j in range(n):
+            print(f"{distances_matrix[i, j]:.4f}", end=" ")
+        print()
 
     # Tour length
     length = tour_length(tour, distances_matrix)
     print(f"\nTotal tour length: {length:.4f}")
     print("=" * 40)
+
+    # Generate all tours
+    all_tours = generate_all_tours(n)
+    print(f"\nTotal number of tours: {len(all_tours)}")
+
+    # Brute-force solution
+    best_tour = force_brute(distances_matrix)
+    best_length = tour_length(best_tour, distances_matrix)
+    print(f"\nBest tour found: {best_tour}")
+    print(f"Best tour length: {best_length:.4f}")
 
     # Show tour graph
     draw_tour(cities, tour)

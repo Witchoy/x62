@@ -123,4 +123,48 @@ def main():
     # Show tour graph
     draw_tour(cities, tour)
 
-main()
+def estimation_echantillonnage():
+    n = 10
+
+    print("=" * 40)
+    print(f"  Travelling Salesman Problem (n={n})")
+    print("=" * 40)
+
+    # Cities initialization
+    cities = init_cities(n)
+    print(f"\n{n} cities generated:")
+    for i, c in enumerate(cities):
+        print(f"  City {i+1:2d}: ({c.x:.4f}, {c.y:.4f})")
+
+    # Tour initialization
+    tour = list(range(1, n + 1))
+    print(f"\nTour: {tour}")
+
+    # Distance matrix
+    distances_matrix = distance_matrix(cities)
+    print("\nDistance matrix:")
+    for i in range(n):
+        for j in range(n):
+            print(f"{distances_matrix[i, j]:.4f}", end=" ")
+        print()
+
+    # Tour length
+    length = tour_length(tour, distances_matrix)
+    print(f"\nTotal tour length: {length:.4f}")
+    print("=" * 40)
+
+    # Generate all tours
+    all_tours = generate_all_tours(n)
+    print(f"\nTotal number of tours: {len(all_tours)}")
+    all_tours = rd.sample(all_tours, 5)
+
+    # Brute-force solution
+    best_tour = force_brute(distances_matrix)
+    best_length = tour_length(best_tour, distances_matrix)
+    print(f"\nBest tour found: {best_tour}")
+    print(f"Best tour length: {best_length:.4f}")
+
+    # Show tour graph
+    draw_tour(cities, tour)
+
+estimation_echantillonnage()

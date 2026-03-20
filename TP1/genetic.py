@@ -10,8 +10,6 @@ def random_population(nb_tours, n):
     
     return pop
 
-def displacement_mutation(tour):
-    
 
 def main():
     populations = random_population(3, 10)

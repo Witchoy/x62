@@ -15,7 +15,7 @@ def mse(u, v, b):
     v : array des yi
     b : [b0, b1] coefficients du modèle linéaire
     """
-    pass
+    return np.mean((v - (b[0] + b[1] * u))**2)
 
 
 def ssr_gradient(u, v, b):
@@ -24,10 +24,11 @@ def ssr_gradient(u, v, b):
     Retourne un vecteur [∂C/∂b0, ∂C/∂b1].
     Les formules analytiques sont données dans le sujet.
     """
-    pass
+    r = (b[0] + b[1]*u) - v
+    return np.array([np.mean(r), np.mean(r * u)])
 
 
-def lin_reg_descent(u, v, learn_rate=0.1, n_iter=50, tolerance=1e-6):
+def lin_reg_descent(u, v, learning_rate=0.1, n_iter=50, tolerance=1e-6):
     """Descente de gradient pour la régression linéaire.
 
     u, v         : données (arrays numpy des xi et yi)
@@ -37,7 +38,17 @@ def lin_reg_descent(u, v, learn_rate=0.1, n_iter=50, tolerance=1e-6):
 
     Retourne la suite des points [b0, b1] parcourus durant la descente.
     """
-    pass
+    b = np.array([0.0, 0.0])
+    points_visites = [b.copy()]
+
+    for i in range(n_iter):
+        step = - ssr_gradient(u, v, b) * learning_rate
+        b += step
+        points_visites.append(b.copy())
+        if(np.linalg.norm(step) < tolerance):
+            break
+
+    return points_visites
 
 
 # --- Section 2.2 : coefficient de détermination ---

@@ -19,6 +19,7 @@ from linear_regression import *
 # print("gradient_descent(diff_parabole, start=5.0, learning_rate=0.001)")
 # print(points)
 
+
 # --- Section 1.2 : Quartique g(x) = x⁴ + 3x³ - 4x ---
 # TODO: tester gradient_descent avec diff_quartique, observer minima locaux vs global
 
@@ -30,15 +31,20 @@ from linear_regression import *
 # print("gradient_descent(diff_quartique, start=-15.0, learning_rate=0.001)")
 # print(points)
 
+
 # --- Section 1.3 : Fonction Gamma ---
 # TODO: tester gradient_descent avec diff_gamma sur les réels > 0
 
-points = gradient_descent(diff_gamma, start=1.5, learning_rate=0.01)
-print(points[-1])
+# points = gradient_descent(diff_gamma, start=1.5, learning_rate=0.01)
+# print(points[-1])
 
 # --- Section 2.1 : Régression linéaire (données synthétiques) ---
 u_1 = np.array([-1.2, 1.5, -0.9, 1.2])
 v_1 = np.array([-1.1, 1.2, -0.6, 0.9])
+
+result = lin_reg_descent(u_1, v_1, learning_rate=0.1, n_iter=1000)
+print("b0, b1=", result[-1])
+
 
 # TODO: appeler lin_reg_descent, afficher la descente 3D et la droite de régression
 

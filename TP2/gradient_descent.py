@@ -22,14 +22,16 @@ def numerical_diff(f, x, h=1e-5):
     """Approximation numérique de f'(x) par différence finie centrée :
     f'(x) ≈ (f(x+h) - f(x-h)) / (2h)
     """
-    pass
+    diff1 = f(x + h)
+    diff2 = f(x - h)
+    return ( diff1 - diff2 ) / ( 2 * h )
 
 
 def diff_gamma(x):
     """Dérivée numérique de la fonction Gamma d'Euler en x,
     calculée via numerical_diff avec math.gamma
     """
-    pass
+    return numerical_diff(math.gamma, x)
 
 
 # --- Algorithme principal ---
